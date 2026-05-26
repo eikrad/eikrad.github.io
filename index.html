@@ -21,11 +21,10 @@
   h1, h2, h3, p { margin: 0; }
   a { color: inherit; }
   *::selection { background: rgba(29, 104, 34, 0.25); }
-  /* Smaller screens — sidebar becomes a top strip */
   @media (max-width: 900px) {
     #root > div { display: block !important; grid-template-columns: none !important; }
-    aside { position: static !important; height: auto !important; border-right: none !important; border-bottom: 1px solid #e0d5bf; }
-    main { padding: 24px 24px 60px !important; }
+    aside { display: none !important; }
+    main { padding: 68px 20px 60px !important; }
   }
 </style>
 </head>
@@ -292,7 +291,7 @@ const hl = (P, isActive) => ({
 });
 
 /* ─── SIDEBAR — alphabetical index of EVERYTHING on the page ─── */
-function Sidebar({ P, page, entries }) {
+function Sidebar({ P, page, entries, onClose }) {
   const { active, set } = useActive();
   const C = window.C;
 
@@ -352,6 +351,7 @@ function Sidebar({ P, page, entries }) {
               <a href={`#${row.id}`}
                 onMouseEnter={() => set(row.id)}
                 onMouseLeave={() => set(null)}
+                onClick={onClose || undefined}
                 style={{
                   display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'baseline', gap: 10,
                   padding: '4px 6px', textDecoration: 'none', color: 'inherit', cursor: 'pointer',
@@ -421,20 +421,90 @@ function ThemeToggle({ P, theme, onToggle }) {
   );
 }
 
+function useIsMobile(bp = 900) {
+  const [mobile, setMobile] = React.useState(() => window.innerWidth <= bp);
+  React.useEffect(() => {
+    const h = () => setMobile(window.innerWidth <= bp);
+    window.addEventListener('resize', h);
+    return () => window.removeEventListener('resize', h);
+  }, [bp]);
+  return mobile;
+}
+
 /* The outer wrapper that every page uses. Renders <Sidebar/> + reading column. */
 function PageShell({ page, entries, children }) {
   const [theme, toggleTheme] = useTheme('light');
   const [active, setActive] = React.useState(null);
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const isMobile = useIsMobile();
   const P = Theme[theme];
 
-  // sync background color
   React.useEffect(() => {
     document.body.style.background = P.bg;
     document.body.style.color = P.ink;
   }, [P]);
 
+  React.useEffect(() => {
+    document.body.style.overflow = drawerOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [drawerOpen]);
+
+  const closeDrawer = () => setDrawerOpen(false);
+
   return (
     <ActiveCtx.Provider value={{ active, set: setActive }}>
+
+      {/* ── Mobile top bar ── */}
+      {isMobile && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+          height: 52, display: 'flex', alignItems: 'center',
+          justifyContent: 'space-between', padding: '0 16px',
+          background: P.bg, borderBottom: `1px solid ${P.rule}`,
+        }}>
+          <button onClick={() => setDrawerOpen(true)} style={{
+            background: 'transparent', border: 'none', cursor: 'pointer',
+            fontFamily: 'var(--ix-mono)', fontSize: 20, color: P.ink,
+            padding: '4px 8px', lineHeight: 1,
+          }}>☰</button>
+          <span style={{ fontFamily: 'var(--ix-serif)', fontSize: 17, color: P.ink }}>
+            Eike F. Rades
+          </span>
+          <ThemeToggle P={P} theme={theme} onToggle={toggleTheme}/>
+        </div>
+      )}
+
+      {/* ── Drawer backdrop ── */}
+      {isMobile && (
+        <div onClick={closeDrawer} style={{
+          position: 'fixed', inset: 0, zIndex: 200,
+          background: 'rgba(0,0,0,0.45)',
+          opacity: drawerOpen ? 1 : 0,
+          pointerEvents: drawerOpen ? 'auto' : 'none',
+          transition: 'opacity 0.25s ease',
+        }}/>
+      )}
+
+      {/* ── Drawer panel ── */}
+      {isMobile && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, bottom: 0, width: 300,
+          zIndex: 201, overflowY: 'auto',
+          background: P.bg, borderRight: `1px solid ${P.rule}`,
+          transform: drawerOpen ? 'translateX(0)' : 'translateX(-100%)',
+          transition: 'transform 0.25s ease',
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '14px 16px' }}>
+            <button onClick={closeDrawer} style={{
+              background: 'transparent', border: 'none', cursor: 'pointer',
+              fontFamily: 'var(--ix-mono)', fontSize: 16, color: P.dim, padding: '4px 8px',
+            }}>✕</button>
+          </div>
+          <Sidebar P={P} page={page} entries={entries} onClose={closeDrawer}/>
+        </div>
+      )}
+
+      {/* ── Main grid ── */}
       <div style={{
         background: P.bg, color: P.ink,
         minHeight: '100vh',
@@ -443,9 +513,11 @@ function PageShell({ page, entries, children }) {
       }}>
         <Sidebar P={P} page={page} entries={entries}/>
         <main style={{ padding: '32px 56px 80px', maxWidth: 880, width: '100%' }}>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 4 }}>
-            <ThemeToggle P={P} theme={theme} onToggle={toggleTheme}/>
-          </div>
+          {!isMobile && (
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 4 }}>
+              <ThemeToggle P={P} theme={theme} onToggle={toggleTheme}/>
+            </div>
+          )}
           {children(P)}
           <PageFooter P={P}/>
         </main>
@@ -483,12 +555,13 @@ function HomeContent({ P, photoSrc }) {
   const { active, set } = window.useActive();
   const hl = window.hl;
   const Block = window.Block;
+  const isMobile = useIsMobile();
 
   return (
     <>
       {/* HERO */}
       <section style={{ paddingBottom: 40, borderBottom: `1px solid ${P.rule}` }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 260px', gap: 40, alignItems: 'end' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 260px', gap: 40, alignItems: 'end' }}>
           <div>
             <div style={{ fontFamily: 'var(--ix-mono)', fontSize: 10, letterSpacing: '0.22em', color: P.faint, marginBottom: 10, textTransform: 'uppercase' }}>
               Eike F. Rades · LLM Engineer · Roskilde, DK
@@ -520,10 +593,12 @@ function HomeContent({ P, photoSrc }) {
               </div>
             </div>
           </div>
-          <figure style={{ margin: 0 }}>
-            <img src={photoSrc} alt="Eike F. Rades"
-              style={{ width: '100%', display: 'block', filter: P.bg === '#14110b' ? 'grayscale(20%) brightness(0.92)' : 'grayscale(0%)' }}/>
-          </figure>
+          {!isMobile && (
+            <figure style={{ margin: 0 }}>
+              <img src={photoSrc} alt="Eike F. Rades"
+                style={{ width: '100%', display: 'block', filter: P.bg === '#14110b' ? 'grayscale(20%) brightness(0.92)' : 'grayscale(0%)' }}/>
+            </figure>
+          )}
         </div>
       </section>
 
