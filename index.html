@@ -383,7 +383,7 @@ function Block({ P, num, title, children, after }) {
   return (
     <section style={{ paddingTop: 40, paddingBottom: 4 }}>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, marginBottom: 22 }}>
-        <span style={{ fontFamily: 'var(--ix-mono)', fontSize: 11, color: P.accent, letterSpacing: '0.18em' }}>§ {num}</span>
+        <span style={{ fontFamily: 'var(--ix-mono)', fontSize: 11, color: P.accent, letterSpacing: '0.18em' }}>/ {num}</span>
         <h2 style={{ fontFamily: 'var(--ix-serif)', fontWeight: 400, fontSize: 30, letterSpacing: '-0.015em', margin: 0, color: P.ink }}>{title}</h2>
         <span style={{ flex: 1, height: 1, background: P.rule, marginBottom: 8 }}/>
         {after}
