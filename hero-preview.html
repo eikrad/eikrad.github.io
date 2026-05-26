@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero Alternatives — Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500;8..60,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --serif: 'Source Serif 4', Georgia, serif;
+    --sans:  'Inter', -apple-system, sans-serif;
+    --mono:  'JetBrains Mono', monospace;
+    --bg:    #f7f0e1;
+    --ink:   #1f1a14;
+    --dim:   #5e544a;
+    --faint: #a89e8d;
+    --rule:  #e0d5bf;
+    --wash:  #ece3cd;
+    --accent:#1d6822;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #d6ccb8; font-family: var(--sans); color: var(--ink); }
+
+  /* ── Page layout ── */
+  body { padding: 40px 24px 80px; }
+  h1.page-title {
+    font-family: var(--mono); font-size: 11px; font-weight: 400;
+    letter-spacing: 0.2em; color: var(--faint); text-transform: uppercase;
+    text-align: center; margin-bottom: 48px;
+  }
+
+  .variants { display: flex; flex-direction: column; gap: 64px; }
+
+  /* ── Variant shell ── */
+  .variant { background: var(--bg); }
+  .variant-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
+    color: var(--faint); padding: 10px 40px;
+    border-bottom: 1px solid var(--rule); text-transform: uppercase;
+  }
+  .variant-label strong { color: var(--accent); }
+
+  /* Mimic the reading-column width */
+  .hero-wrap { padding: 48px 40px 48px; max-width: 760px; }
+
+  /* ── CURRENT ── */
+  .current .badge {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
+    color: var(--accent); margin-bottom: 18px;
+  }
+  .current h1 {
+    font-family: var(--serif); font-weight: 400; font-size: 60px;
+    line-height: 1.0; letter-spacing: -0.025em; color: var(--ink);
+  }
+  .current p {
+    margin-top: 22px; font-size: 16px; line-height: 1.65; color: var(--dim); max-width: 540px;
+  }
+  .current .links {
+    display: flex; gap: 18px; margin-top: 22px; font-size: 14px;
+    font-family: var(--mono); flex-wrap: wrap;
+  }
+  .current .links a { color: var(--dim); text-decoration: underline; text-underline-offset: 4px; }
+  .current .links a.primary { color: var(--accent); }
+  .current .grid { display: grid; grid-template-columns: 1fr 200px; gap: 40px; align-items: end; }
+  .current .photo-placeholder {
+    width: 100%; aspect-ratio: 3/4; background: var(--wash);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 10px; color: var(--faint);
+    letter-spacing: 0.12em;
+  }
+
+  /* ── VARIANT A — Editorial / Print ── */
+  .variant-a .photo-banner {
+    width: 100%; height: 220px; background: var(--wash);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 10px; color: var(--faint); letter-spacing: 0.12em;
+    border-bottom: 1px solid var(--rule);
+  }
+  .variant-a .hero-wrap { padding-top: 32px; }
+  .variant-a .eyebrow {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em;
+    color: var(--faint); margin-bottom: 10px; text-transform: uppercase;
+  }
+  .variant-a h1 {
+    font-family: var(--serif); font-weight: 400; font-size: 48px;
+    line-height: 1.05; letter-spacing: -0.02em; color: var(--ink);
+    border-bottom: 2px solid var(--ink); padding-bottom: 18px; margin-bottom: 18px;
+  }
+  .variant-a .meta-row {
+    display: flex; align-items: baseline; gap: 32px;
+  }
+  .variant-a .name-block {
+    font-family: var(--serif); font-size: 17px; font-weight: 500; color: var(--ink);
+  }
+  .variant-a .role-block {
+    font-family: var(--sans); font-size: 14px; color: var(--dim); line-height: 1.5;
+    flex: 1;
+  }
+  .variant-a .links {
+    display: flex; gap: 16px; margin-top: 20px;
+    font-family: var(--mono); font-size: 12px; flex-wrap: wrap;
+  }
+  .variant-a .links a { color: var(--dim); text-decoration: underline; text-underline-offset: 4px; }
+  .variant-a .cta {
+    display: inline-block; padding: 8px 20px; border: 1px solid var(--accent);
+    color: var(--accent); font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.1em; text-decoration: none; margin-top: 20px;
+  }
+
+  /* ── VARIANT B — Minimal / CV-direkt ── */
+  .variant-b .hero-wrap { padding-top: 56px; padding-bottom: 56px; }
+  .variant-b .name {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em;
+    color: var(--faint); text-transform: uppercase; margin-bottom: 16px;
+  }
+  .variant-b h1 {
+    font-family: var(--serif); font-weight: 400; font-size: 72px;
+    line-height: 0.95; letter-spacing: -0.03em; color: var(--ink);
+    margin-bottom: 28px;
+  }
+  .variant-b h1 em { font-style: italic; color: var(--accent); }
+  .variant-b .role {
+    font-family: var(--sans); font-size: 18px; font-weight: 400; color: var(--dim);
+    line-height: 1.4; max-width: 480px; margin-bottom: 32px;
+    padding-left: 18px; border-left: 2px solid var(--rule);
+  }
+  .variant-b .links {
+    display: flex; gap: 0; font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+  .variant-b .links a {
+    color: var(--dim); text-decoration: none; padding: 9px 18px;
+    border: 1px solid var(--rule);
+  }
+  .variant-b .links a:not(:first-child) { border-left: none; }
+  .variant-b .links a.primary {
+    background: var(--accent); color: var(--bg); border-color: var(--accent);
+  }
+  .variant-b .status {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 28px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .variant-b .status::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); display: inline-block;
+  }
+
+  /* ── VARIANT C — Statement-Led ── */
+  .variant-c .hero-wrap { padding-top: 72px; padding-bottom: 72px; }
+  .variant-c h1 {
+    font-family: var(--serif); font-weight: 300; font-size: 80px;
+    line-height: 0.95; letter-spacing: -0.03em; color: var(--ink);
+    margin-bottom: 40px;
+  }
+  .variant-c h1 .line2 { color: var(--dim); }
+  .variant-c .single-line {
+    font-size: 15px; font-family: var(--sans); color: var(--dim);
+    max-width: 440px; line-height: 1.5; margin-bottom: 36px;
+  }
+  .variant-c .single-line strong { color: var(--ink); font-weight: 500; }
+  .variant-c .divider {
+    width: 48px; height: 2px; background: var(--accent); margin-bottom: 28px;
+  }
+  .variant-c .links {
+    display: flex; gap: 28px; font-family: var(--mono); font-size: 12px;
+    letter-spacing: 0.1em; align-items: center;
+  }
+  .variant-c .links a { color: var(--faint); text-decoration: none; }
+  .variant-c .links a.primary {
+    color: var(--accent); text-decoration: underline; text-underline-offset: 4px;
+  }
+  .variant-c .badge {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+    color: var(--faint); text-transform: uppercase; margin-bottom: 32px;
+  }
+
+  /* ── Section marker comparison ── */
+  .section-markers { margin-top: 64px; }
+  .section-markers h2.page-title { text-align: left; margin-bottom: 24px; }
+  .marker-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2px;
+  }
+  .marker-card {
+    background: var(--bg); padding: 24px 28px;
+  }
+  .marker-card .label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+    color: var(--faint); margin-bottom: 14px; text-transform: uppercase;
+  }
+  .marker-example {
+    display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px;
+  }
+  .marker-example .marker {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; color: var(--accent);
+    white-space: nowrap;
+  }
+  .marker-example .section-title {
+    font-family: var(--serif); font-weight: 400; font-size: 26px;
+    letter-spacing: -0.015em; color: var(--ink);
+  }
+  .marker-card hr { border: none; border-top: 1px solid var(--rule); margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<h1 class="page-title">Hero Variants — Design Preview · eikrad.github.io</h1>
+
+<div class="variants">
+
+  <!-- CURRENT -->
+  <div class="variant current">
+    <div class="variant-label"><strong>CURRENT</strong> — Status quo</div>
+    <div class="hero-wrap">
+      <div class="grid">
+        <div>
+          <div class="badge">AVAILABLE FOR HIRE · 2026</div>
+          <h1>Scientist by training,<br>engineer by trade.</h1>
+          <p>I'm <strong>Eike</strong> — Ph.D. geoscientist turned AI engineer,
+          building agentic RAG systems, evaluation harnesses, and production tooling on top of LLMs.
+          The index on the left is the whole CV. Skim, hover, click in.</p>
+          <div class="links">
+            <a href="#" class="primary">eikef.rades@protonmail.com</a>
+            <a href="#">github</a>
+            <a href="#">linkedin</a>
+            <a href="#">scholar</a>
+          </div>
+        </div>
+        <div class="photo-placeholder">PHOTO</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VARIANT A -->
+  <div class="variant variant-a">
+    <div class="variant-label"><strong>A — Editorial / Print-Look</strong> — Foto als breites Banner, Name + Rolle in einer Zeile, starke Trennlinie unter der Headline</div>
+    <div class="photo-banner">PHOTO — full width banner</div>
+    <div class="hero-wrap">
+      <div class="eyebrow">Eike F. Rades · AI Engineer · Roskilde, DK</div>
+      <h1>Scientist by training,<br>engineer by trade.</h1>
+      <div class="meta-row">
+        <div class="role-block">
+          Ph.D. geoscientist turned AI engineer — building agentic RAG systems,
+          evaluation harnesses, and production tooling on top of LLMs.
+        </div>
+      </div>
+      <a href="#" class="cta">AVAILABLE FOR HIRE · 2026</a>
+      <div class="links">
+        <a href="#">eikef.rades@protonmail.com</a>
+        <a href="#">github</a>
+        <a href="#">linkedin</a>
+        <a href="#">scholar</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- VARIANT B -->
+  <div class="variant variant-b">
+    <div class="variant-label"><strong>B — Minimal / CV-direkt</strong> — Kein Foto im Hero, stärkere Typografie-Hierarchie, E-Mail als primärer CTA-Button, Status-Dot</div>
+    <div class="hero-wrap">
+      <div class="name">Eike F. Rades</div>
+      <div class="status">Available for hire · 2026</div>
+      <h1>Scientist<br>by training,<br><em>engineer</em><br>by trade.</h1>
+      <div class="role">
+        Ph.D. geoscientist turned AI engineer — agentic RAG, evaluation harnesses,
+        production LLM tooling.
+      </div>
+      <div class="links">
+        <a href="#" class="primary">EMAIL</a>
+        <a href="#">GITHUB</a>
+        <a href="#">LINKEDIN</a>
+        <a href="#">SCHOLAR</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- VARIANT C -->
+  <div class="variant variant-c">
+    <div class="variant-label"><strong>C — Statement-Led</strong> — Maximales Weißraum um die Headline, der Fließtext auf einen Satz reduziert, Foto komplett weg</div>
+    <div class="hero-wrap">
+      <div class="badge">Eike F. Rades · Roskilde, DK · Available 2026</div>
+      <h1>
+        Scientist<br>by training,<br>
+        <span class="line2">engineer<br>by trade.</span>
+      </h1>
+      <div class="divider"></div>
+      <div class="single-line">
+        <strong>Ph.D. geoscientist</strong> turned AI engineer — agentic RAG systems,
+        evaluation harnesses, and production LLM tooling.
+      </div>
+      <div class="links">
+        <a href="#" class="primary">eikef.rades@protonmail.com</a>
+        <a href="#">github</a>
+        <a href="#">linkedin</a>
+        <a href="#">scholar</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Section marker comparison -->
+<div class="section-markers">
+  <h1 class="page-title" style="text-align:left; margin-bottom:24px;">Section Marker Alternativen</h1>
+  <div class="marker-grid">
+
+    <div class="marker-card">
+      <div class="label">Current — § Zeichen</div>
+      <div class="marker-example">
+        <span class="marker">§ 01</span>
+        <span class="section-title">Capabilities</span>
+      </div>
+      <hr>
+    </div>
+
+    <div class="marker-card">
+      <div class="label">Option 1 — Zahl + Punkt (empfohlen)</div>
+      <div class="marker-example">
+        <span class="marker">01 ·</span>
+        <span class="section-title">Capabilities</span>
+      </div>
+      <hr>
+    </div>
+
+    <div class="marker-card">
+      <div class="label">Option 2 — Slash</div>
+      <div class="marker-example">
+        <span class="marker">/ 01</span>
+        <span class="section-title">Capabilities</span>
+      </div>
+      <hr>
+    </div>
+
+    <div class="marker-card">
+      <div class="label">Option 3 — Nur Zahl</div>
+      <div class="marker-example">
+        <span class="marker">01</span>
+        <span class="section-title">Capabilities</span>
+      </div>
+      <hr>
+    </div>
+
+    <div class="marker-card">
+      <div class="label">Option 4 — Kein Prefix</div>
+      <div class="marker-example">
+        <span class="section-title">Capabilities</span>
+      </div>
+      <hr>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
