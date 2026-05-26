@@ -486,44 +486,44 @@ function HomeContent({ P, photoSrc }) {
 
   return (
     <>
-      {/* HERO — Variant A: Editorial / Print */}
+      {/* HERO */}
       <section style={{ paddingBottom: 40, borderBottom: `1px solid ${P.rule}` }}>
-        <figure style={{ margin: '0 0 28px', overflow: 'hidden', height: 260 }}>
-          <img src={photoSrc} alt="Eike F. Rades"
-            style={{
-              width: '100%', height: '100%', display: 'block',
-              objectFit: 'cover', objectPosition: 'center 20%',
-              filter: P.bg === '#14110b' ? 'grayscale(20%) brightness(0.92)' : 'grayscale(0%)',
-            }}/>
-        </figure>
-        <div style={{ fontFamily: 'var(--ix-mono)', fontSize: 10, letterSpacing: '0.22em', color: P.faint, marginBottom: 10, textTransform: 'uppercase' }}>
-          Eike F. Rades · LLM Engineer · Roskilde, DK
-        </div>
-        <h1 style={{
-          fontFamily: 'var(--ix-serif)', fontWeight: 400, fontSize: 52,
-          lineHeight: 1.05, letterSpacing: '-0.02em', margin: 0, color: P.ink,
-          borderBottom: `2px solid ${P.ink}`, paddingBottom: 18, marginBottom: 18,
-        }}>
-          Geoscientist turned<br/>LLM engineer.
-        </h1>
-        <p style={{ fontSize: 15, lineHeight: 1.65, color: P.dim, maxWidth: 560, margin: 0 }}>
-          The scientific method meets the AI stack.
-        </p>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginTop: 22, flexWrap: 'wrap' }}>
-          <a href={`mailto:${C.email}`}
-            style={{
-              display: 'inline-block', padding: '8px 20px',
-              border: `1px solid ${P.accent}`, color: P.accent,
-              fontFamily: 'var(--ix-mono)', fontSize: 12, letterSpacing: '0.1em',
-              textDecoration: 'none', textTransform: 'uppercase',
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 260px', gap: 40, alignItems: 'end' }}>
+          <div>
+            <div style={{ fontFamily: 'var(--ix-mono)', fontSize: 10, letterSpacing: '0.22em', color: P.faint, marginBottom: 10, textTransform: 'uppercase' }}>
+              Eike F. Rades · LLM Engineer · Roskilde, DK
+            </div>
+            <h1 style={{
+              fontFamily: 'var(--ix-serif)', fontWeight: 400, fontSize: 52,
+              lineHeight: 1.05, letterSpacing: '-0.02em', margin: 0, color: P.ink,
+              borderBottom: `2px solid ${P.ink}`, paddingBottom: 18, marginBottom: 18,
             }}>
-            Available for hire · 2026
-          </a>
-          <div style={{ display: 'flex', gap: 18, fontSize: 13, fontFamily: 'var(--ix-mono)', flexWrap: 'wrap' }}>
-            <a href={`https://${C.github}`}   style={{ color: P.dim, textDecoration: 'underline', textUnderlineOffset: 4 }}>github</a>
-            <a href={`https://${C.linkedin}`} style={{ color: P.dim, textDecoration: 'underline', textUnderlineOffset: 4 }}>linkedin</a>
-            <a href={`https://${C.scholar}`}  style={{ color: P.dim, textDecoration: 'underline', textUnderlineOffset: 4 }}>scholar</a>
+              Geoscientist turned<br/>LLM engineer.
+            </h1>
+            <p style={{ fontSize: 15, lineHeight: 1.65, color: P.dim, maxWidth: 480, margin: 0 }}>
+              The scientific method meets the AI stack.
+            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginTop: 22, flexWrap: 'wrap' }}>
+              <a href={`mailto:${C.email}`}
+                style={{
+                  display: 'inline-block', padding: '8px 20px',
+                  border: `1px solid ${P.accent}`, color: P.accent,
+                  fontFamily: 'var(--ix-mono)', fontSize: 12, letterSpacing: '0.1em',
+                  textDecoration: 'none', textTransform: 'uppercase',
+                }}>
+                Available for hire · 2026
+              </a>
+              <div style={{ display: 'flex', gap: 18, fontSize: 13, fontFamily: 'var(--ix-mono)', flexWrap: 'wrap' }}>
+                <a href={`https://${C.github}`}   style={{ color: P.dim, textDecoration: 'underline', textUnderlineOffset: 4 }}>github</a>
+                <a href={`https://${C.linkedin}`} style={{ color: P.dim, textDecoration: 'underline', textUnderlineOffset: 4 }}>linkedin</a>
+                <a href={`https://${C.scholar}`}  style={{ color: P.dim, textDecoration: 'underline', textUnderlineOffset: 4 }}>scholar</a>
+              </div>
+            </div>
           </div>
+          <figure style={{ margin: 0 }}>
+            <img src={photoSrc} alt="Eike F. Rades"
+              style={{ width: '100%', display: 'block', filter: P.bg === '#14110b' ? 'grayscale(20%) brightness(0.92)' : 'grayscale(0%)' }}/>
+          </figure>
         </div>
       </section>
 
